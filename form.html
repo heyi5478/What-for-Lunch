@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>問題回報</title>
+    <link rel="stylesheet" href="./css/basic.css">
+    <link rel="stylesheet" href="./css/form.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="./position.css">
+</head>
+
+<body style="margin: 0;">
+    <div>
+        <nav class="navbar">
+            <!-- 左側超連結 -->
+            <a href="./index.html" class="navbar-brand">午餐吃什麼?</a>
+            <!-- 右側的超連結清單 -->
+            <div class="navbar-list">
+                <a href="./game.html">小遊戲</a>
+
+            </div>
+            <!-- 手機版切換導覽列顯示按鈕 -->
+            <button class="navbar-toggler">
+                <div class="line"></div>
+            </button>
+        </nav>
+    </div>
+
+    <!-- 卡片 -->
+    <div class="form-box mt-5">
+        <!-- 卡片標題區 -->
+        <div class="form-header">
+            <h1>回報中心</h1>
+            <p>歡迎來到我的網站，如您有任何問題可透過下方的表單與我聯繫。</p>
+        </div>
+        <!-- 卡片標題區 end -->
+        <!-- 表單 -->
+        <!-- 
+            將表單資料寄送至 FormSpree API 
+            規則文件：https://formspree.io/ 
+        -->
+        <form class="form-body" method="POST" action="https://formspree.io/f/mrgjybqd">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input name="Email" id="email" type="email" class="form-control" placeholder="請輸入您的Email" required>
+            </div>
+            <div class="form-group">
+                <label for="username">姓名</label>
+                <input name="姓名" id="username" type="text" class="form-control" placeholder="請輸入您的姓名" value="預設姓名">
+            </div>
+            <div class="form-group">
+                <label for="comment">問題回報</label>
+                <textarea name="留言" id="comment" rows="4" class="form-control" placeholder="請輸入留言" minlength="2"
+                    maxlength="50" required></textarea>
+            </div>
+            <div class="form-group">
+                <button class="submit-btn" type="submit">送出表單</button>
+            </div>
+        </form>
+        <!-- 表單 end -->
+    </div>
+    <!-- 卡片 end -->
+</body>
+
+</html>

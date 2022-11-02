@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UFO War</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="./position.css">
+</head>
+
+<body style="margin: 0;">
+
+    <nav class="navbar">
+        <!-- 左側超連結 -->
+        <a href="index.html" class="navbar-brand">午餐吃什麼?</a>
+        <!-- 右側的超連結清單 -->
+        <div class="navbar-list">
+            <a href="./form.html">問題回報</a>
+
+        </div>
+        <!-- 手機版切換導覽列顯示按鈕 -->
+        <button class="navbar-toggler">
+            <div class="line"></div>
+        </button>
+    </nav>
+
+
+    <canvas id="cvs" width="800" height="600" class="mt-6"></canvas>
+
+    <script type="module">
+        import Engine, { cvs, ctx, imgs } from "./Engine.js";
+        import Plane from "./Plane.js";
+        import UFOSystem from "./UFOSystem.js";
+        import Missile from "./Missile.js";
+        import Timer from "./Timer.js";
+
+        Engine.loadImages(initGame);
+        function initGame() {
+            // 加入鍵盤控制
+            document.addEventListener("keydown", keydown);
+            document.addEventListener("keyup", keyup);
+            Engine.circle = 0;
+            Engine.ufoSystem = new UFOSystem();
+            Engine.particles = [
+                new Plane(), Engine.ufoSystem
+            ];
+            window.setInterval(refreshGame, 10);
+        }
+        function keydown(e) {
+            if (e.code === "ArrowLeft") {
+                Engine.keys.left = true;
+            } else if (e.code === "ArrowUp") {
+                Engine.keys.up = true;
+            } else if (e.code === "ArrowRight") {
+                Engine.keys.right = true;
+            } else if (e.code === "ArrowDown") {
+                Engine.keys.down = true;
+            } else if (e.code === "Space") {
+                Engine.keys.space = true;
+            }
+        }
+        function keyup(e) {
+            if (e.code === "ArrowLeft") {
+                Engine.keys.left = false;
+            } else if (e.code === "ArrowUp") {
+                Engine.keys.up = false;
+            } else if (e.code === "ArrowRight") {
+                Engine.keys.right = false;
+            } else if (e.code === "ArrowDown") {
+                Engine.keys.down = false;
+            } else if (e.code === "Space") {
+                Engine.keys.space = false;
+            }
+        }
+
+        function refreshGame() {
+            let particles = Engine.particles;
+            // 一般的更新
+            for (let i = 0; i < particles.length; i++) {
+                if (particles[i].update()) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            // 碰撞偵測
+            for (let i = 0; i < particles.length; i++) {
+                if (particles[i].checkCollision()) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            // 重畫
+            ctx.fillRect(0, 0, cvs.width, cvs.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].render();
+            }
+            Engine.circle++;
+        }        
+    </script>
+</body>
+
+</html>
